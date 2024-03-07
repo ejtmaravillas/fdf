@@ -18,6 +18,7 @@ void	map_data(t_map_data *data, int argc, char **argv)
 	matrix_get_size(data, argv[1]);
 	data_init(data, argv[1]);
 	map_points(data);
+	set_screen(data);
 }
 
 void	data_init(t_map_data *data, char *argv)
@@ -48,7 +49,9 @@ void	data_init(t_map_data *data, char *argv)
 void	set_values(t_map_data *data)
 {
 	data->theta_x = 0.523599;
-	data->theta_y = 0.523599;
+	data->theta_y = 0.785398;
+	// data->theta_x = 0;
+	// data->theta_y = 0;
 	data->theta_z = 0;
 	data->max_x = 0;
 	data->max_y = 0;
@@ -56,8 +59,15 @@ void	set_values(t_map_data *data)
 	data->min_x = 0;
 	data->min_y = 0;
 	data->min_z = 0;
-	data->grid_scale = 1;
+	data->x_offset = 0;
+	data->y_offset = 0;
+	data->grid_scale = 30;
+	data->dda_dx = 0;
+	data->dda_dy = 0;
+	data->dda_slope = 0;
+	data->dda_step = 0;
 }
+
 void	matrix_get_size(t_map_data *data, char *argv)
 {
 	char	*singleline;

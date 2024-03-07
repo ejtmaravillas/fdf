@@ -75,7 +75,6 @@ void	free_matrixdata(t_map_data *data)
 		while (col < data->col)
 		{
 			free(data->color_map[row][col]);
-			// free(data->point_map[row][col]);
 			col++;
 		}
 		free(data->color_map[row]);

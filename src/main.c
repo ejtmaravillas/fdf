@@ -30,16 +30,16 @@ int	main(int argc, char **argv)
 	if (!data.mlx_ptr)
 		return (1);
 	data.mlx_win = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF - EMARAVIL");
-	data.img = mlx_new_image(data.mlx_ptr, 500, 500);
+	data.img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length,
 			&data.endian);
 	// img_mlx_pixel_put(&img, 5, 5, 0xFF0000);
 	index = 0;
-	while (index < 100)
-	{
-		img_mlx_pixel_put(&data, 700.95 + index, 250.01 + index, 0xFFFF0000);
-		index++;
-	}
+	// while (index < 100)
+	// {
+	// 	img_mlx_pixel_put(&data, 700.95 + index, 250.01 + index, 0xFFFF0000);
+	// 	index++;
+	// }
 	// index = 0;
 	// while (index < 100)
 	// {
@@ -73,6 +73,7 @@ int	main(int argc, char **argv)
 	// mlx_hook(data.mlx_win, 2, 1L << 0, handle_keypress, data);
 	// mlx_hook(data.mlx_win, 17, 0, ft_close, data);
 	// mlx_hook(data.mlx_win, 4, 1L << 2, mouse_hook, data);
+	map_draw(&data);
 	mlx_loop(data.mlx_ptr);
 	free(data.mlx_ptr);
 	free_matrixdata(&data);
