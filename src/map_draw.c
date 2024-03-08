@@ -6,7 +6,7 @@
 /*   By: emaravil <emaravil@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:48:11 by emaravil          #+#    #+#             */
-/*   Updated: 2024/03/07 22:40:59 by emaravil         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:53:13 by emaravil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,14 @@ void	map_draw(t_map_data *data)
 {
 	int	x;
 	int	y;
-	// int	y_next;
 
 	printf("MAP DRAW\n");
-	printf("data->grid_scale: %f\n", data->grid_scale);
-	printf("data->x_offset: %f\n", data->x_offset);
-	printf("data->y_offset: %f\n", data->y_offset);
 	y = 0;
 	while (y < data->row)
 	{
 		x = 0;
 		while (x < data->col)
 		{
-			printf("|| x1: %f y1: %f z1: %f ||\n", data->point_map[y][x].x, data->point_map[y][x].y, data->point_map[y][x].z);
-			printf("|| x2: %f y2: %f z2: %f ||\n", data->point_map[y][x + 1].x, data->point_map[y][x + 1].y, data->point_map[y][x + 1].z);
-			printf("data->row: %d\n", data->row);
-			printf("data->col: %d\n", data->col);
-			printf("data->x_offset: %f\n", data->x_offset);
-			printf("data->y_offset: %f\n", data->min_y);
 			if (x < data->col - 1)
 				draw_line(data, data->point_map[y][x], \
 				data->point_map[y][x + 1]);
@@ -44,9 +34,11 @@ void	map_draw(t_map_data *data)
 		}
 		y++;
 	}
+	// printf("theta_x: %f theta_y: %f theta_z: %f\n", data->theta_x, data->theta_y, data->theta_z);
 	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->img, 0, 0);
 }
 
+//DDA
 void	draw_line(t_map_data *data, t_map_point p1, t_map_point p2)
 {
 	float	x;
@@ -58,17 +50,15 @@ void	draw_line(t_map_data *data, t_map_point p1, t_map_point p2)
 	p1.y += data->y_offset;
 	p2.x += data->x_offset;
 	p2.y += data->y_offset;
-	printf("x1: %f y1: %f z1: %f\n", p1.x, p1.y, p1.z);
-	printf("x2: %f y2: %f z2: %f\n", p2.x, p2.y, p2.z);
 	x = p1.x;
 	y = p1.y;
 	draw_params(data, p1, p2);
-	while (fabs(p2.x - x) > 0.5)
+	while (round(x) != round(p2.x))
 	{
-		img_mlx_pixel_put(data, round(fabs(x)), round(fabs(y)), 0xFFFF0000);
+		if ((x > 0 && x < WINDOW_WIDTH) || (y > 0 && y < WINDOW_HEIGHT))
+			img_mlx_pixel_put(data, round(fabs(x)), round(fabs(y)), 0xFFFFFF);
 		x += data->dda_dx / data->dda_step;
 		y += data->dda_dy / data->dda_step;
-		printf("	x: %f y: %f\n", x, y);
 	}
 }
 

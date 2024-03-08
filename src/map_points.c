@@ -65,5 +65,7 @@ t_map_point	get_rotationpoints(t_map_point a, t_map_data *data)
 		data->max_z = a.z;
 	if (fabs(data->min_z) > data->max_z)
 		data->max_z = fabs(data->min_z);
+	// printf("a.x: %f a.y: %f a.z: %f\n", a.x, a.y, a.z);
+	// printf("MP max_x: %f max_y: %f\n", data->max_x, data->max_y);
 	return (a);
 }

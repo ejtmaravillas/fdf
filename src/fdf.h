@@ -22,6 +22,8 @@
 # include "../lib/libft/libft.h"
 # include "../lib/libft/get_next_line.h"
 # include "../mlx/mlx.h"
+// # include <X11/X.h>
+// # include <X11/keysym.h>
 
 # define WINDOW_WIDTH 1500
 # define WINDOW_HEIGHT 800
@@ -96,4 +98,10 @@ void		set_screen(t_map_data *data);
 void		map_draw(t_map_data *data);
 void		draw_line(t_map_data *data, t_map_point p1, t_map_point p2);
 void		draw_params(t_map_data *data, t_map_point p1, t_map_point p2);
+//HOOKS
+void		handle_rotation(int keysym, t_map_data *data);
+void		handle_offset(int keysym, t_map_data *data);
+int			handle_keypress(int keysym, t_map_data *data);
+void		clean_img(t_map_data *data);
+int			ft_close(t_map_data *data);
 #endif

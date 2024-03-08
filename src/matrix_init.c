@@ -48,8 +48,8 @@ void	data_init(t_map_data *data, char *argv)
 
 void	set_values(t_map_data *data)
 {
-	data->theta_x = 0.523599;
-	data->theta_y = 0.785398;
+	data->theta_x = 0.0;
+	data->theta_y = 0.0;
 	// data->theta_x = 0;
 	// data->theta_y = 0;
 	data->theta_z = 0;

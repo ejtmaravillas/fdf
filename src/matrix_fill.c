@@ -84,4 +84,3 @@ void	free_matrixdata(t_map_data *data)
 	free(data->data_map);
 	free(data->color_map);
 }
-

@@ -3,7 +3,8 @@ NAME = fdf
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Imlx
 
-FDF_SRCS = main.c matrix_init.c matrix_fill.c matrix_map.c map_points.c map_rotation.c map_draw.c map_setscreen.c
+FDF_SRCS = main.c matrix_init.c matrix_fill.c matrix_map.c map_points.c map_rotation.c map_draw.c map_setscreen.c \
+			hooks.c
 FDF_OBJS = $(FDF_SRCS:.c=.o)
 VPATH = src:lib:lib/libft
 
