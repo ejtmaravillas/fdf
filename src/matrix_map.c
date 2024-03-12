@@ -39,7 +39,7 @@ void	ft_check_args(int argc, char **argv)
 		ft_putendl_fd("Wrong number of arguments...", 2);
 		exit(EXIT_FAILURE);
 	}
-	extnsn = ft_strchr_gnl(argv[1], '.');
+	extnsn = ft_strchr_gnl(argv[1] + 1, '.');
 	if (!extnsn)
 	{
 		ft_putendl_fd("No .fdf extension...", 2);
@@ -75,12 +75,12 @@ int	ft_argv_len(char **argv)
 	while (argv[count] != NULL)
 	{
 		count++;
-		if (ft_strncmp(argv[count], "\n", 1) && (ft_strchr(argv[count], '\n')))
+		if (argv[count] != NULL && ft_strncmp(argv[count], "\n", 1) && (ft_strchr(argv[count], '\n')))
 		{
 			count++;
 			break ;
 		}
-		if (ft_strchr(argv[count], '\n'))
+		if (argv[count] != NULL && ft_strchr(argv[count], '\n'))
 			break ;
 	}
 	return (count);

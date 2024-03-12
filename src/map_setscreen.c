@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_setscreen.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaravil <emaravil@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:17:05 by emaravil          #+#    #+#             */
-/*   Updated: 2024/03/07 22:22:51 by emaravil         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:53:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,35 @@
 
 void	set_screen(t_map_data *data)
 {
-	int	x_diff;
-	int	y_diff;
-
-	x_diff = WINDOW_WIDTH - data->max_x;
-	y_diff = WINDOW_HEIGHT - data->max_y;
-	data->max_x = data->max_x - data->min_x;
-	data->max_y = data->max_y - data->min_y;
-	data->x_offset = -data->min_x;
-	data->y_offset = -data->min_y;
-	if (x_diff < 0 || y_diff < 0)
+	if ((data->max_x  - data->min_x > WINDOW_WIDTH || data->max_y - data->min_y > WINDOW_HEIGHT))
 		zoom_out(data);
-	else
-		zoom_in(data);
+	data->max_x = data->max_x + fabs(data->min_x);
+	data->max_y = data->max_y + fabs(data->min_y);
+	data->x_offset = fabs(data->min_x) + (WINDOW_WIDTH - data->max_x) / 2;
+	data->y_offset = fabs(data->min_y) + (WINDOW_HEIGHT - data->max_y) / 2;
+	data->initx_offset = data->x_offset;
+	data->inity_offset = data->y_offset;
+	data->initgrid_scale = data->grid_scale;
 }
 
 void	zoom_out(t_map_data *data)
 {
-	while ((data->max_x > WINDOW_WIDTH || data->max_y > WINDOW_HEIGHT))
+	while ((data->max_x  - data->min_x > WINDOW_WIDTH || data->max_y - data->min_y > WINDOW_HEIGHT))
 	{
 		data->max_y /= 2;
 		data->max_x /= 2;
-		data->x_offset = fabs(data->x_offset / 2);
-		data->y_offset = fabs(data->y_offset / 2);
+		data->min_x /= 2;
+		data->min_y /= 2;
+		data->x_offset = (WINDOW_WIDTH - data->max_x - data->min_x) / 2;
+		data->y_offset = (WINDOW_HEIGHT - data->max_y - data->min_y) / 2;
 		data->grid_scale /= 2;
-		if (data->grid_scale < 1)
-		{
-			if (data->max_y > WINDOW_HEIGHT)
-				data->max_y = WINDOW_HEIGHT;
-			if (data->max_x > WINDOW_WIDTH)
-				data->max_x = WINDOW_WIDTH;
-			break ;
-		}
 	}
 }
 
 void	zoom_in(t_map_data *data)
 {
-	while (data->max_x > WINDOW_WIDTH || data->max_y > WINDOW_HEIGHT)
+	printf("ZOOM in!\n");
+	while (data->max_x * 3 < WINDOW_WIDTH || data->max_y * 3 < WINDOW_HEIGHT)
 	{
 		data->max_x *= 3;
 		data->max_y *= 3;

@@ -28,10 +28,11 @@ void	ft_matrix_fill(t_map_data *data, int index, char **argv)
 			break ;
 		data->data_map[index][col] = ft_atoi(argv[col]);
 		comma = ft_strchr(argv[col], ',');
-		if (comma)
+		if (comma++)
 		{
-			comma++;
 			strlen = ft_strlen(comma);
+			if (ft_strchr(comma, '\n'))
+				strlen = ft_strlen(comma) - 1;
 			data->color_map[index][col] = malloc(sizeof(char) * (strlen + 1));
 			data->color_map[index][col][strlen] = '\0';
 			ft_strlcpy(data->color_map[index][col], comma, strlen + 1);
@@ -45,9 +46,10 @@ int	get_fd(char *argv)
 	char	*filedirectory;
 	int		fd;
 
-	filedirectory = ft_strjoin("./test_maps/", argv);
+	// filedirectory = ft_strjoin("./test_maps/", argv);
+	filedirectory = argv;
 	fd = open(filedirectory, O_RDONLY);
-	free(filedirectory);
+	// free(filedirectory);
 	return (fd);
 }
 
