@@ -66,10 +66,8 @@ void	set_values(t_map_data *data)
 	data->grid_scale = 50;
 	data->color_select = 0;
 	data->color_gradient = 0;
-	// data->dda_dx = 0;
-	// data->dda_dy = 0;
-	// data->dda_slope = 0;
-	// data->dda_step = 0;
+	data->color_a = set_color("0x0000FF");
+	data->color_b = set_color("0xFFFF00");
 }
 
 void	matrix_get_size(t_map_data *data, char *argv)

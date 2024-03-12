@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_setscreen.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: emaravil <emaravil@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:17:05 by emaravil          #+#    #+#             */
-/*   Updated: 2024/03/11 15:53:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:23:22 by emaravil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	set_screen(t_map_data *data)
 {
-	if ((data->max_x  - data->min_x > WINDOW_WIDTH || data->max_y - data->min_y > WINDOW_HEIGHT))
+	if ((data->max_x - data->min_x > WINDOW_WIDTH || \
+		data->max_y - data->min_y > WINDOW_HEIGHT))
 		zoom_out(data);
 	data->max_x = data->max_x + fabs(data->min_x);
 	data->max_y = data->max_y + fabs(data->min_y);
@@ -27,7 +28,8 @@ void	set_screen(t_map_data *data)
 
 void	zoom_out(t_map_data *data)
 {
-	while ((data->max_x  - data->min_x > WINDOW_WIDTH || data->max_y - data->min_y > WINDOW_HEIGHT))
+	while ((data->max_x - data->min_x > WINDOW_WIDTH || \
+		data->max_y - data->min_y > WINDOW_HEIGHT))
 	{
 		data->max_y /= 2;
 		data->max_x /= 2;

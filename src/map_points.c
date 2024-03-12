@@ -38,7 +38,7 @@ void	map_points(t_map_data *data)
 
 t_color_point set_color(char *str)
 {
-	t_color_point color_point;
+	t_color_point	color_point;
 
 	color_point.r = 0;
 	color_point.g = 0;
@@ -53,7 +53,7 @@ t_color_point set_color(char *str)
 		color_point.r = 255;
 		color_point.g = 255;
 		color_point.b = 255;
-		color_point.t = 255;
+		color_point.t = 0;
 	}
 	return (color_point);
 }
@@ -67,7 +67,7 @@ t_color_point	hex_to_dec_8(char *str)
 	color_point.r = 0;
 	color_point.g = 0;
 	color_point.b = 0;
-	color_point.t = 255;
+	color_point.t = 0;
 	while (str[x] != '\0' && ft_strlen(str) == 8)
 	{
 		if (x == 2 || x == 3)
@@ -141,52 +141,4 @@ t_map_point	set_coordinate(float x, float y, float z)
 	point.y = y;
 	point.z = z;
 	return (point);
-}
-
-t_map_point	get_rotationpoints(t_map_point a, t_map_data *data)
-{
-	a = rotation_x(a, data);
-	a = rotation_y(a, data);
-	a = rotation_z(a, data);
-	if (data->projection == 1)
-		a = get_isometricpoints(a);
-	a.x *= data->grid_scale;
-	a.y *= data->grid_scale;
-	a.z *= data->grid_scale;
-	if (a.x < data->min_x)
-		data->min_x = a.x;
-	if (a.x > data->max_x)
-		data->max_x = a.x;
-	if (a.y < data->min_y)
-		data->min_y = a.y;
-	if (a.y > data->max_y)
-		data->max_y = a.y;
-	if (a.z < data->min_z)
-		data->min_z = a.z;
-	if (a.z > data->max_y)
-		data->max_z = a.z;
-	if (fabs(data->min_z) > data->max_z)
-		data->max_z = fabs(data->min_z);
-	return (a);
-}
-
-t_map_point	get_isometricpoints(t_map_point a)
-{
-	float	temp_x;
-	float	temp_y;
-	float	temp_z;
-
-	temp_x = a.x;
-	temp_y = a.y;
-	temp_z = a.z;
-	a.x = ((sqrt(3) / 2) * (temp_x - temp_y));
-	a.y = (2 * temp_z - temp_x - temp_y) / 2;
-	a.z = - (temp_x + temp_y + temp_z) / (2 * sqrt(2));
-	// data->new_max = data->max_z;
-	// if (data->min_z < 0 || (data->min_z < 0 && data->max_z < 0))
-	// {
-	// 	a.z = a.z - data->min_z + 1;
-	// 	data->new_max = data->max_z - data->min_z + 1;
-	// }
-	return (a);
 }
