@@ -36,30 +36,32 @@
 #  define R_COMMAND 15
 #  define N_COMMAND 45
 #  define M_COMMAND 46
-#  define ZO_COMMAND 69
-#  define ZI_COMMAND 78
+#  define ZO_COMMAND 24
+#  define ZI_COMMAND 27
 #  define U_COMMAND 32
 #  define J_COMMAND 38
 #  define I_COMMAND 34
 #  define K_COMMAND 40
 #  define O_COMMAND 31
 #  define L_COMMAND 37
+#  define C_COMMAND 8
+#  define V_COMMAND 9
 #  define ISO_COMMAND 50
 #  define PAR_COMMAND 48
 #  define TOP_COMMAND 272
 #  define FRN_COMMAND 257
 #  define SID_COMMAND 256
 #  define ESC_COMMAND 53
-#  define COLOR0_COMMAND 82
-#  define COLOR1_COMMAND 83
-#  define COLOR2_COMMAND 84
-#  define COLOR3_COMMAND 85
-#  define COLOR4_COMMAND 86
-#  define COLOR5_COMMAND 87
-#  define COLOR6_COMMAND 88
-#  define COLOR7_COMMAND 89
-#  define COLOR8_COMMAND 91
-#  define COLOR9_COMMAND 92
+#  define COLOR0_COMMAND 29
+#  define COLOR1_COMMAND 18
+#  define COLOR2_COMMAND 19
+#  define COLOR3_COMMAND 20
+#  define COLOR4_COMMAND 21
+#  define COLOR5_COMMAND 23
+#  define COLOR6_COMMAND 22
+#  define COLOR7_COMMAND 26
+#  define COLOR8_COMMAND 28
+#  define COLOR9_COMMAND 25
 # endif
 # ifdef __linux__
 #  define W_COMMAND 119
@@ -130,14 +132,17 @@ typedef struct s_map_data
 	float			theta_y;
 	float			theta_z;
 	int				projection;
+	int				iso;
 	float			p_anglex;
 	float			p_angley;
 	float			max_x;
 	float			max_y;
 	float			max_z;
+	float			max_z_raw;
 	float			min_x;
 	float			min_y;
 	float			min_z;
+	float			min_z_raw;
 	float			x_offset;
 	float			y_offset;
 	float			z_factor;
@@ -147,12 +152,18 @@ typedef struct s_map_data
 	float			grid_scale;
 	float			dda_dx;
 	float			dda_dy;
+	float			dda_dz;
 	float			dda_slope;
 	float			dda_step;
 	float			color_gradient;
-	float			color_select;
-	t_color_point			color_a;
-	t_color_point			color_b;
+	int				color_select;
+	int				color_style;
+	t_color_point	color_a;
+	t_color_point	color_b;
+	t_color_point	color_a_z;
+	t_color_point	color_b_z;
+	char			*color_a_name;
+	char			*color_b_name;
 	float			range_z;
 }	t_map_data;
 
@@ -202,8 +213,10 @@ void			handle_projection(int keysym, t_map_data *data);
 void			handle_scale(int keysym, t_map_data *data);
 void			handle_z(int keysym, t_map_data *data);
 void			handle_color(int keysym, t_map_data *data);
+void			handle_color_style(int keysym, t_map_data *data);
+void			color_name(t_map_data *data);
 void			hook_setdefault(t_map_data *data);
-void			find_maxmin(t_map_data *data);
+void			find_maxmin(t_map_data *data, int set);
 void			clean_img(t_map_data *data);
 int				ft_close(t_map_data *data);
 void			reset_values(t_map_data *data);

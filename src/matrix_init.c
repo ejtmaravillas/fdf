@@ -48,26 +48,30 @@ void	data_init(t_map_data *data, char *argv)
 
 void	set_values(t_map_data *data)
 {
-	// data->theta_x = 5.115989;
-	// data->theta_y = 5.505480;
 	data->theta_x = 0.174533;
 	data->theta_y = 3.14159;
 	data->theta_z = 1.5708;
 	data->projection = 1;
+	data->iso = 1;
 	data->max_x = 0;
 	data->max_y = 0;
 	data->max_z = 0;
+	data->max_z_raw = 0;
 	data->min_x = 0;
 	data->min_y = 0;
 	data->min_z = 0;
+	data->min_z_raw = 0;
 	data->x_offset = 0;
 	data->y_offset = 0;
 	data->z_factor = 1;
 	data->grid_scale = 50;
 	data->color_select = 0;
+	data->color_style = 0;
 	data->color_gradient = 0;
 	data->color_a = set_color("0x0000FF");
 	data->color_b = set_color("0xFFFF00");
+	data->color_a_name = "0xFFFFFF";
+	data->color_b_name = "0xFFFFFF";
 }
 
 void	matrix_get_size(t_map_data *data, char *argv)

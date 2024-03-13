@@ -17,7 +17,7 @@ t_map_point	rotation_x(t_map_point a, t_map_data *data)
 	float	temp_z;
 	float	temp_y;
 
-	temp_z = a.z / data->z_factor;
+	temp_z = a.z;
 	temp_y = a.y;
 	a.y = (temp_y * cos(data->theta_x) + temp_z * \
 	sin(data->theta_x));
@@ -32,7 +32,7 @@ t_map_point	rotation_y(t_map_point a, t_map_data *data)
 	float	temp_z;
 
 	temp_x = a.x;
-	temp_z = a.z / data->z_factor;
+	temp_z = a.z;
 	a.x = (temp_x * cos(data->theta_y) + temp_z * \
 	sin(data->theta_y));
 	a.z = (-temp_x * sin(data->theta_y) + temp_z * \
@@ -74,7 +74,7 @@ t_map_point	get_rotationpoints(t_map_point a, t_map_data *data)
 		data->max_y = a.y;
 	if (a.z < data->min_z)
 		data->min_z = a.z;
-	if (a.z > data->max_y)
+	if (a.z > data->max_z)
 		data->max_z = a.z;
 	if (fabs(data->min_z) > data->max_z)
 		data->max_z = fabs(data->min_z);

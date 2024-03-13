@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 	if (!data.mlx_ptr)
 		return (1);
 	map_data(&data, argc, argv);
+	find_maxmin(&data, 0);
 	data.name = argv[1];
 	if (data.mlx_win)
 		mlx_destroy_window(data.mlx_ptr, data.mlx_win);

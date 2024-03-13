@@ -6,7 +6,7 @@
 /*   By: emaravil <emaravil@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:00:06 by emaravil          #+#    #+#             */
-/*   Updated: 2024/03/12 20:34:38 by emaravil         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:59:51 by emaravil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ int	handle_keypress(int keysym, t_map_data *data)
 		handle_color(keysym, data);
 	else if (keysym == M_COMMAND || keysym == N_COMMAND)
 		handle_z(keysym, data);
+	else if (keysym == C_COMMAND || keysym == V_COMMAND)
+		handle_color_style(keysym, data);
 	else if (keysym == R_COMMAND)
 		reset_values(data);
 	else if (keysym == ESC_COMMAND)
 		ft_close(data);
 	map_draw(data);
+	// printf("x: %f y: %f z: %f\n", data->theta_x, data->theta_y, data->theta_z);
+	// ft_menu(data);
 	return (0);
 }
 
@@ -75,41 +79,110 @@ void	handle_color(int keysym, t_map_data *data)
 	{
 		data->color_select = 5;
 		data->color_a = set_color("0xFF0000");
-		data->color_b = set_color("0x00FF00");
+		data->color_b = set_color("0x00FFFF");
 	}
 	else if (keysym == COLOR6_COMMAND)
 	{
 		data->color_select = 6;
-		data->color_a = set_color("0x00FF00");
+		data->color_a = set_color("0x00FFFF");
 		data->color_b = set_color("0xFF0000");
 	}
 	else if (keysym == COLOR7_COMMAND)
 	{
-		data->color_select = 5;
-		data->color_a = set_color("0xFFFF00");
-		data->color_b = set_color("0x00FF00");
+		data->color_select = 7;
+		data->color_a = set_color("0xFFE755");
+		data->color_b = set_color("0x871282");
 	}
 	else if (keysym == COLOR8_COMMAND)
 	{
-		data->color_select = 6;
-		data->color_a = set_color("0x00FF00");
-		data->color_b = set_color("0xFFFF00");
+		data->color_select = 8;
+		data->color_a = set_color("0x871282");
+		data->color_b = set_color("0xFFE755");
 	}
 	else
 		data->color_select = 0;
+	color_name(data);
+}
+
+void	color_name(t_map_data *data)
+{
+	if (data->color_select == 1)
+	{
+		data->color_a_name = "0x0000FF";
+		data->color_b_name = "0xFFFF00";
+	}
+	else if (data->color_select == 2)
+	{
+		data->color_a_name = "0xFFFF00";
+		data->color_b_name = "0x0000FF";
+	}
+	else if (data->color_select == 3)
+	{
+		data->color_a_name = "0xFF00FF";
+		data->color_b_name = "0x00FF00";
+	}
+	else if (data->color_select == 4)
+	{
+		data->color_a_name = "0x00FF00";
+		data->color_b_name = "0xFF00FF";
+	}
+	else if (data->color_select == 5)
+	{
+		data->color_a_name = "0xFF0000";
+		data->color_b_name = "0x00FFFF";
+	}
+	else if (data->color_select == 6)
+	{
+		data->color_a_name = "0x00FFFF";
+		data->color_b_name = "0xFF0000";
+	}
+	else if (data->color_select == 7)
+	{
+		data->color_a_name = "0xFFE755";
+		data->color_b_name = "0x871282";
+	}
+	else if (data->color_select == 8)
+	{
+		data->color_a_name = "0x871282";
+		data->color_b_name = "0xFFE755";
+	}
+	else
+	{
+		data->color_a_name = "0xFFFFFF";
+		data->color_b_name = "0xFFFFFF";
+	}
+}
+
+void	handle_color_style(int keysym, t_map_data *data)
+{
+	if (keysym == C_COMMAND)
+		data->color_style = 1;
+	else if (keysym == V_COMMAND)
+		data->color_style = 0;
 }
 
 void	handle_z(int keysym, t_map_data *data)
 {
-	if (keysym == N_COMMAND && data->z_factor <= 5)
+	if (keysym == M_COMMAND && data->z_factor <= 5)
+	{
 		data->z_factor += 0.05;
-	else if (keysym == M_COMMAND && data->z_factor >= 0.2)
+		data->max_z_raw = 0;
+		data->min_z_raw = 0;
+	}
+	else if (keysym == N_COMMAND && data->z_factor >= 0.2)
+	{
 		data->z_factor -= 0.05;
+		data->max_z_raw = 0;
+		data->min_z_raw = 0;
+	}
+	// printf("z_factor: %f\n", data->z_factor);
+	find_maxmin(data, 1);
+	find_maxmin(data, 0);
 }
 
 void	hook_setdefault(t_map_data *data)
 {
-	data->grid_scale = 50;
+	data->grid_scale = 60;
 	data->max_x = 0;
 	data->max_y = 0;
 	data->max_z = 0;
@@ -126,20 +199,18 @@ void	handle_projection(int keysym, t_map_data *data)
 	if (keysym == ISO_COMMAND)
 	{
 		data->projection = 1;
+		data->iso = 1;
 		data->theta_x = 0.174533;
 		data->theta_y = 3.14159;
 		data->theta_z = 1.5708;
-		find_maxmin(data);
-		set_screen(data);
 	}
 	else if (keysym == PAR_COMMAND)
 	{
 		data->projection = 2;
+		data->iso = 0;
 		data->theta_x = -0.785398;
 		data->theta_y = 0.785398;
 		data->theta_z = 0;
-		find_maxmin(data);
-		set_screen(data);
 	}
 	else if (keysym == TOP_COMMAND)
 	{
@@ -147,8 +218,6 @@ void	handle_projection(int keysym, t_map_data *data)
 		data->theta_x = 0;
 		data->theta_y = 0;
 		data->theta_z = 0;
-		find_maxmin(data);
-		set_screen(data);
 	}
 	else if (keysym == FRN_COMMAND)
 	{
@@ -156,8 +225,6 @@ void	handle_projection(int keysym, t_map_data *data)
 		data->theta_x = -1.5708;
 		data->theta_y = 0;
 		data->theta_z = 0;
-		find_maxmin(data);
-		set_screen(data);
 	}
 	else if (keysym == SID_COMMAND)
 	{
@@ -165,18 +232,31 @@ void	handle_projection(int keysym, t_map_data *data)
 		data->theta_x = -1.5708;
 		data->theta_y = -1.5708;
 		data->theta_z = 0;
-		find_maxmin(data);
-		set_screen(data);
 	}
+	find_maxmin(data, 1);
+	set_screen(data);
 }
 
-void	find_maxmin(t_map_data *data)
+void	find_maxmin(t_map_data *data, int set)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	while (y < data->row)
+	while (y < data->row && set == 0)
+	{
+		x = 0;
+		while (x < data->col)
+		{
+			if (data->point_map[y][x].z * data->z_factor > data->max_z_raw)
+				data->max_z_raw = data->point_map[y][x].z * data->z_factor;
+			if (data->point_map[y][x].z * data->z_factor < data->min_z_raw)
+				data->min_z_raw = data->point_map[y][x].z * data->z_factor;;
+			x++;
+		}
+		y++;
+	}
+	while (y < data->row && set == 1)
 	{
 		x = 0;
 		while (x < data->col)
@@ -224,6 +304,7 @@ void	reset_values(t_map_data *data)
 	data->x_offset = data->initx_offset;
 	data->y_offset = data->inity_offset;
 	data->z_factor = 1;
+	find_maxmin(data, 1);
 }
 
 void	clean_img(t_map_data *data)
@@ -257,6 +338,7 @@ void	handle_rotation(int keysym, t_map_data *data)
 		data->theta_z += 0.05;
 	else if (keysym == 37)
 		data->theta_z -= 0.05;
+	find_maxmin(data, 1);
 }
 
 void	handle_offset(int keysym, t_map_data *data)
@@ -269,14 +351,16 @@ void	handle_offset(int keysym, t_map_data *data)
 		data->y_offset += 5;
 	else if (keysym == 13)
 		data->y_offset -= 5;
+	find_maxmin(data, 1);
 }
 
 void	handle_scale(int keysym, t_map_data *data)
 {
-	if (keysym == 69 && data->grid_scale < 150)
+	if (keysym == ZO_COMMAND && data->grid_scale < 150)
 		data->grid_scale += 0.5;
-	else if (keysym == 78 && data->grid_scale > 1)
+	else if (keysym == ZI_COMMAND && data->grid_scale > 1)
 		data->grid_scale -= 0.5;
+	find_maxmin(data, 1);
 }
 
 
@@ -287,6 +371,10 @@ void	ft_menu(t_map_data *data)
 		20, 0X00FFFF, "MAP NAME");
 	mlx_string_put(data->mlx_ptr, data->mlx_win, WINDOW_WIDTH - 250, \
 		45, 0X00FFFF, data->name);
+	mlx_string_put(data->mlx_ptr, data->mlx_win, 10, WINDOW_HEIGHT - 150, 0X00FFFF, \
+		"c and v -> color style");
+	mlx_string_put(data->mlx_ptr, data->mlx_win, 10, WINDOW_HEIGHT - 125, 0X00FFFF, \
+		"0 to 8 -> color combination");
 	mlx_string_put(data->mlx_ptr, data->mlx_win, 10, \
 		WINDOW_HEIGHT - 30, 0XFFFF00, "By: ELI JOSHUA MARAVILLAS");
 }
@@ -333,19 +421,25 @@ void	projection_type(t_map_data *data)
 	mlx_string_put(data->mlx_ptr, data->mlx_win, s, 80, 0X00FFFF, "PROJECTION TYPE");
 	if (data->projection == 1)
 		mlx_string_put(data->mlx_ptr, data->mlx_win, s, y, \
-		0X00FFFF, "ISOMETRIC Projection");
+		0X00FFFF, "	Isometric Projection");
 	if (data->projection == 2)
 		mlx_string_put(data->mlx_ptr, data->mlx_win, s, y, \
-		0X00FFFF, "PARALLEL Projection");
+		0X00FFFF, "	Parallel Projection");
 	if (data->projection == 3)
 		mlx_string_put(data->mlx_ptr, data->mlx_win, s, y, \
-		0X00FFFF, "TOP VIEW");
+		0X00FFFF, "	Top View");
 	if (data->projection == 4)
 		mlx_string_put(data->mlx_ptr, data->mlx_win, s, y, \
-		0X00FFFF, "FRONT VIEW");
+		0X00FFFF, "	Front View");
 	if (data->projection == 5)
 		mlx_string_put(data->mlx_ptr, data->mlx_win, s, y, \
-		0X00FFFF, "SIDE VIEW");
+		0X00FFFF, "	Side View");
+	mlx_string_put(data->mlx_ptr, data->mlx_win, s, \
+		135, 0X00FFFF, "COLOR MAP");
+	mlx_string_put(data->mlx_ptr, data->mlx_win, s, \
+		160, 0X00FFFF, ft_strjoin("	Color A: ", data->color_a_name));
+	mlx_string_put(data->mlx_ptr, data->mlx_win, s, \
+		185, 0X00FFFF, ft_strjoin("	Color B: ", data->color_b_name));
 	mlx_string_put(data->mlx_ptr, data->mlx_win, s, \
 		WINDOW_HEIGHT - 30, 0X00FFFF, ft_strjoin("zoom: ", ft_itoa(round(data->grid_scale))));
 }
