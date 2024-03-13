@@ -6,7 +6,7 @@
 /*   By: emaravil <emaravil@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:00:06 by emaravil          #+#    #+#             */
-/*   Updated: 2024/03/13 14:59:51 by emaravil         ###   ########.fr       */
+/*   Updated: 2024/03/13 23:11:11 by emaravil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	handle_keypress(int keysym, t_map_data *data)
 {
 	clean_img(data);
-	printf("keysym: %d\n", keysym);
+	// printf("keysym: %d\n", keysym);
 	if (keysym == U_COMMAND || keysym == J_COMMAND || keysym == I_COMMAND \
 	|| keysym == K_COMMAND || keysym == O_COMMAND || keysym == L_COMMAND)
 		handle_rotation(keysym, data);
@@ -98,6 +98,12 @@ void	handle_color(int keysym, t_map_data *data)
 		data->color_select = 8;
 		data->color_a = set_color("0x871282");
 		data->color_b = set_color("0xFFE755");
+	}
+	else if (keysym == COLOR9_COMMAND)
+	{
+		data->color_select = 9;
+		data->color_a = set_color("0xFFFFFF");
+		data->color_b = set_color("0xFFFFFF");
 	}
 	else
 		data->color_select = 0;
@@ -186,12 +192,15 @@ void	hook_setdefault(t_map_data *data)
 	data->max_x = 0;
 	data->max_y = 0;
 	data->max_z = 0;
+	data->max_z_raw = 0;
 	data->min_x = 0;
 	data->min_y = 0;
 	data->min_z = 0;
+	data->min_z_raw = 0;
 	data->x_offset = 0;
 	data->y_offset = 0;
 	data->z_factor = 1;
+	data->color_gradient = 0;
 }
 
 void	handle_projection(int keysym, t_map_data *data)
@@ -199,7 +208,6 @@ void	handle_projection(int keysym, t_map_data *data)
 	if (keysym == ISO_COMMAND)
 	{
 		data->projection = 1;
-		data->iso = 1;
 		data->theta_x = 0.174533;
 		data->theta_y = 3.14159;
 		data->theta_z = 1.5708;
@@ -207,7 +215,6 @@ void	handle_projection(int keysym, t_map_data *data)
 	else if (keysym == PAR_COMMAND)
 	{
 		data->projection = 2;
-		data->iso = 0;
 		data->theta_x = -0.785398;
 		data->theta_y = 0.785398;
 		data->theta_z = 0;
@@ -234,6 +241,7 @@ void	handle_projection(int keysym, t_map_data *data)
 		data->theta_z = 0;
 	}
 	find_maxmin(data, 1);
+	find_maxmin(data, 0);
 	set_screen(data);
 }
 
@@ -251,7 +259,7 @@ void	find_maxmin(t_map_data *data, int set)
 			if (data->point_map[y][x].z * data->z_factor > data->max_z_raw)
 				data->max_z_raw = data->point_map[y][x].z * data->z_factor;
 			if (data->point_map[y][x].z * data->z_factor < data->min_z_raw)
-				data->min_z_raw = data->point_map[y][x].z * data->z_factor;;
+				data->min_z_raw = data->point_map[y][x].z * data->z_factor;
 			x++;
 		}
 		y++;
@@ -305,6 +313,7 @@ void	reset_values(t_map_data *data)
 	data->y_offset = data->inity_offset;
 	data->z_factor = 1;
 	find_maxmin(data, 1);
+	find_maxmin(data, 0);
 }
 
 void	clean_img(t_map_data *data)
@@ -313,6 +322,8 @@ void	clean_img(t_map_data *data)
 	int	j;
 
 	i = -1;
+	find_maxmin(data, 1);
+	find_maxmin(data, 0);
 	while (++i <= round(data->max_x + data->x_offset))
 	{
 		j = -1;

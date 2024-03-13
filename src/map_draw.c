@@ -6,7 +6,7 @@
 /*   By: emaravil <emaravil@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:48:11 by emaravil          #+#    #+#             */
-/*   Updated: 2024/03/13 15:03:59 by emaravil         ###   ########.fr       */
+/*   Updated: 2024/03/13 20:29:50 by emaravil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	map_draw(t_map_data *data)
 		x = 0;
 		while (x < data->col)
 		{
+			// if (data->color_style == 1 && data->color_select == 9)
+			// {
+			// 	data->color_a_z = data->color_point[y][x];
+			// }
 			if (x < data->col - 1)
 				draw_line(data, data->point_map[y][x], \
 				data->point_map[y][x + 1]);
@@ -38,7 +42,7 @@ void	map_draw(t_map_data *data)
 			x++;
 		}
 	}
-	printf("theta_x: %f theta_y: %f theta_z: %f\n", data->theta_x, data->theta_y, data->theta_z);
+	// printf("theta_x: %f theta_y: %f theta_z: %f\n", data->theta_x, data->theta_y, data->theta_z);
 	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->img, 0, 0);
 	ft_menu(data);
 }
@@ -49,8 +53,6 @@ void	draw_line(t_map_data *data, t_map_point p1, t_map_point p2)
 	p2.z *= data->z_factor;
 	if (data->color_style == 0)
 	{
-		// printf("za_raw: %f gradient_a_raw: %f\n", p1.z, ((p1.z - data->min_z_raw) / data->range_z));
-		// printf("zb_raw: %f gradient_b_raw: %f\n", p2.z, ((p2.z - data->min_z_raw) / data->range_z));
 		data->color_a_z = get_color_val((p1.z - data->min_z_raw) / data->range_z, data->color_a, data->color_b);
 		data->color_b_z = get_color_val((p2.z - data->min_z_raw) / data->range_z, data->color_a, data->color_b);
 	}
