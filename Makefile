@@ -11,18 +11,18 @@ FDF_OBJS = $(FDF_SRCS:.c=.o)
 VPATH = src:lib:lib/libft
 
 # includes for mlx mac
-INCLUDES = -I/opt/X11/include -Imlx
+# INCLUDES = -I/opt/X11/include -Imlx
 # includes for mlx linux
-# INCLUDES = -I/usr/include -Imlx -O3
+INCLUDES = -I/usr/include -Imlx -O3
 
 # mlxflags for mac
-MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+# MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 # mlxflags for linux
-# MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 
 MLX_DIR = ./mlx
-# MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
-MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
+# MLX_LIB = $(MLX_DIR)/libmlx.a
 
 ### LIBFT
 LIBFT = libft.a

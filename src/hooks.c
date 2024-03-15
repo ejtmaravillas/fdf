@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaravil <emaravil@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:00:06 by emaravil          #+#    #+#             */
-/*   Updated: 2024/03/15 14:56:00 by emaravil         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:32:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	handle_keypress(int keysym, t_map_data *data)
 {
 	clean_img(data);
+	printf("keysym: %d\n", keysym);
 	if (keysym == U_COMMAND || keysym == J_COMMAND || keysym == I_COMMAND \
 	|| keysym == K_COMMAND || keysym == O_COMMAND || keysym == L_COMMAND)
 		handle_rotation(keysym, data);

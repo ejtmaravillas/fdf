@@ -53,6 +53,9 @@ void	img_mlx_pixel_put(t_map_data *data, int x, int y, int color)
 
 int	ft_close(t_map_data *data)
 {
+	mlx_destroy_window(data->mlx_ptr, data->mlx_win);
+	mlx_destroy_image(data->mlx_ptr, data->img);
+	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
 	free_matrixdata(data);
 	exit(0);

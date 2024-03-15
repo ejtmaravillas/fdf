@@ -71,16 +71,20 @@ void	free_matrixdata(t_map_data *data)
 	while (row < data->row)
 	{
 		col = 0;
-		free(data->data_map[row]);
 		while (col < data->col)
 		{
 			free(data->color_map[row][col]);
+			// free(data->data_map[row][col]);
 			col++;
 		}
+		free(data->data_map[row]);
+		free(data->color_point[row]);
 		free(data->color_map[row]);
 		free(data->point_map[row]);
 		row++;
 	}
 	free(data->data_map);
 	free(data->color_map);
+	free(data->color_point);
+	free(data->point_map);
 }

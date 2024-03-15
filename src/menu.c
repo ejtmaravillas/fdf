@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaravil <emaravil@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:20:24 by emaravil          #+#    #+#             */
-/*   Updated: 2024/03/15 14:23:39 by emaravil         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:48:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,24 +88,33 @@ void	projection_type(t_map_data *data)
 
 void	projection_type_extn(t_map_data *data)
 {
-	int	s;
 	int	y;
+	char	*zoom_str;
+	char	*color_a;
+	char	*color_b;
+	char	*gridscale_str;
 
-	s = WINDOW_WIDTH - 250;
 	y = 100;
+	gridscale_str = ft_itoa(round(data->grid_scale));
+	zoom_str = ft_strjoin("zoom: ", gridscale_str);
+	color_b = ft_strjoin("	Color B: ", data->color_b_name);
+	color_a = ft_strjoin("	Color A: ", data->color_a_name);
 	if (data->projection == 4)
-		mlx_string_put(data->mlx_ptr, data->mlx_win, s, y, \
-		0X00FFFF, "	Front View");
+		mlx_string_put(data->mlx_ptr, data->mlx_win, WINDOW_WIDTH - 250, \
+		y, 0X00FFFF, "	Front View");
 	if (data->projection == 5)
-		mlx_string_put(data->mlx_ptr, data->mlx_win, s, y, \
-		0X00FFFF, "	Side View");
-	mlx_string_put(data->mlx_ptr, data->mlx_win, s, \
+		mlx_string_put(data->mlx_ptr, data->mlx_win, WINDOW_WIDTH - 250, \
+		y, 0X00FFFF, "	Side View");
+	mlx_string_put(data->mlx_ptr, data->mlx_win, WINDOW_WIDTH - 250, \
 		135, 0X00FFFF, "COLOR MAP");
-	mlx_string_put(data->mlx_ptr, data->mlx_win, s, \
-		160, 0X00FFFF, ft_strjoin("	Color A: ", data->color_a_name));
-	mlx_string_put(data->mlx_ptr, data->mlx_win, s, \
-		185, 0X00FFFF, ft_strjoin("	Color B: ", data->color_b_name));
-	mlx_string_put(data->mlx_ptr, data->mlx_win, s, \
-		WINDOW_HEIGHT - 30, 0X00FFFF, ft_strjoin("zoom: ", \
-		ft_itoa(round(data->grid_scale))));
+	mlx_string_put(data->mlx_ptr, data->mlx_win, WINDOW_WIDTH - 250, \
+		160, 0X00FFFF, color_a);
+	mlx_string_put(data->mlx_ptr, data->mlx_win, WINDOW_WIDTH - 250, \
+		185, 0X00FFFF, color_b);
+	mlx_string_put(data->mlx_ptr, data->mlx_win, WINDOW_WIDTH - 250, \
+		WINDOW_HEIGHT - 30, 0X00FFFF, zoom_str);
+	free(zoom_str);
+	free(color_a);
+	free(color_b);
+	free(gridscale_str);
 }

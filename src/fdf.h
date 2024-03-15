@@ -80,6 +80,8 @@
 #  define K_COMMAND 107
 #  define O_COMMAND 111
 #  define L_COMMAND 108
+#  define C_COMMAND 99
+#  define V_COMMAND 118
 #  define ISO_COMMAND 96
 #  define PAR_COMMAND 65289
 #  define TOP_COMMAND 65509
@@ -243,7 +245,6 @@ int				percent_to_color(float percent, t_map_data *data, \
 				t_color_point p1, t_color_point p2);
 int				create_trgb(int t, int r, int g, int b);
 void			draw_pixel(t_map_data *data, float x, float y);
-
 #endif
 
 // LINUX KEYS
