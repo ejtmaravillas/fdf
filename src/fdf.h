@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include "../lib/libft/libft.h"
+# include "../lib/libft/ft_printf.h"
 # include "../lib/libft/get_next_line.h"
 # include "../mlx/mlx.h"
 // # include <X11/X.h>
@@ -201,6 +202,8 @@ void			zoom_in(t_map_data *data);
 void			set_screen(t_map_data *data);
 //DDA
 void			map_draw(t_map_data *data);
+void			draw_select_style(t_map_data *data);
+void			draw_select_color(t_map_data *data, int x, int y);
 void			draw_line(t_map_data *data, t_map_point p1, t_map_point p2);
 void			draw_h(t_map_data *data, t_map_point p1, t_map_point p2);
 void			draw_v(t_map_data *data, t_map_point p1, t_map_point p2);
@@ -209,26 +212,38 @@ void			draw_params(t_map_data *data, t_map_point p1, t_map_point p2);
 void			handle_rotation(int keysym, t_map_data *data);
 void			handle_offset(int keysym, t_map_data *data);
 int				handle_keypress(int keysym, t_map_data *data);
+void			handle_keypress_extn(int keysym, t_map_data *data);
 void			handle_projection(int keysym, t_map_data *data);
+void			handle_projection_extn(int keysym, t_map_data *data);
 void			handle_scale(int keysym, t_map_data *data);
 void			handle_z(int keysym, t_map_data *data);
 void			handle_color(int keysym, t_map_data *data);
+void			handle_color_extn(int keysym, t_map_data *data);
+void			handle_color_extn_a(int keysym, t_map_data *data);
 void			handle_color_style(int keysym, t_map_data *data);
 void			color_name(t_map_data *data);
+void			color_name_extn(t_map_data *data);
 void			hook_setdefault(t_map_data *data);
 void			find_maxmin(t_map_data *data, int set);
+void			find_maxmin_s0(t_map_data *data, int y);
+void			find_maxmin_s1(t_map_data *data, int y);
 void			clean_img(t_map_data *data);
 int				ft_close(t_map_data *data);
 void			reset_values(t_map_data *data);
+void			reset_values_extn(t_map_data *data);
 void			ft_menu(t_map_data *data);
 void			ft_menu_extension(t_map_data *data);
+void			ft_menu_extension(t_map_data *data);
 void			projection_type(t_map_data *data);
+void			projection_type_extn(t_map_data *data);
 //COLOR
 t_color_point	get_color_val(float percent, t_color_point p1, \
 				t_color_point p2);
 int				percent_to_color(float percent, t_map_data *data, \
 				t_color_point p1, t_color_point p2);
 int				create_trgb(int t, int r, int g, int b);
+void			draw_pixel(t_map_data *data, float x, float y);
+
 #endif
 
 // LINUX KEYS

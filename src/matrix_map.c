@@ -75,7 +75,8 @@ int	ft_argv_len(char **argv)
 	while (argv[count] != NULL)
 	{
 		count++;
-		if (argv[count] != NULL && ft_strncmp(argv[count], "\n", 1) && (ft_strchr(argv[count], '\n')))
+		if (argv[count] != NULL && ft_strncmp(argv[count], "\n", 1) \
+			&& (ft_strchr(argv[count], '\n')))
 		{
 			count++;
 			break ;

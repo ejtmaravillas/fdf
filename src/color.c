@@ -31,11 +31,9 @@ int	percent_to_color(float percent, t_map_data *data, t_color_point p1, \
 		return (create_trgb(0, 255, 255, 255));
 }
 
-
 t_color_point	get_color_val(float percent, t_color_point p1, t_color_point p2)
 {
 	t_color_point	color_point;
-
 
 	color_point.r = round((p2.r - p1.r) * percent) + p1.r;
 	color_point.g = round((p2.g - p1.g) * percent) + p1.g;

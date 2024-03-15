@@ -76,8 +76,6 @@ t_map_point	get_rotationpoints(t_map_point a, t_map_data *data)
 		data->min_z = a.z;
 	if (a.z > data->max_z)
 		data->max_z = a.z;
-	if (fabs(data->min_z) > data->max_z)
-		data->max_z = fabs(data->min_z);
 	return (a);
 }
 

@@ -46,10 +46,8 @@ int	get_fd(char *argv)
 	char	*filedirectory;
 	int		fd;
 
-	// filedirectory = ft_strjoin("./test_maps/", argv);
 	filedirectory = argv;
 	fd = open(filedirectory, O_RDONLY);
-	// free(filedirectory);
 	return (fd);
 }
 

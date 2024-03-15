@@ -1,11 +1,12 @@
 NAME = fdf
 
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+# CFLAGS = -Wall -Wextra -Werror -fsanitize=address -O1
 CFLAGS = -Wall -Wextra -Werror
 
 FDF_SRCS = main.c matrix_init.c matrix_fill.c matrix_map.c map_points.c map_rotation.c map_draw.c map_setscreen.c \
-			hooks.c color.c
+			hooks.c color.c map_color_points.c menu.c hooks_a.c hooks_b.c hooks_c.c hooks_d.c \
+			map_draw_a.c
 FDF_OBJS = $(FDF_SRCS:.c=.o)
 VPATH = src:lib:lib/libft
 

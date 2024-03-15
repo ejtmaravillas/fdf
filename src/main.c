@@ -29,13 +29,11 @@ int	main(int argc, char **argv)
 	data.img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.addr = mlx_get_data_addr(data.img, \
 		&data.bits_per_pixel, &data.line_length, &data.endian);
-	data.mlx_win = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF - EMARAVIL");
+	data.mlx_win = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, \
+		"FDF - EMARAVIL");
 	mlx_put_image_to_window(data.mlx_ptr, data.mlx_win, data.img, 0, 0);
-	// mlx_hook(data.mlx_win, 2, 1L << 9, handle_keypress, &data);
 	mlx_hook(data.mlx_win, 2, 1L << 0, handle_keypress, &data);
 	mlx_hook(data.mlx_win, 17, 0, ft_close, &data);
-	// data.initx_offset = data.x_offset;
-	// data.inity_offset = data.y_offset;
 	map_draw(&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
@@ -47,7 +45,8 @@ void	img_mlx_pixel_put(t_map_data *data, int x, int y, int color)
 
 	if (!(x < 0 || y < 0 || x > WINDOW_WIDTH || y > WINDOW_HEIGHT))
 	{
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		dst = data->addr + (y * data->line_length + x * \
+			(data->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
 	}
 }

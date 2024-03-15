@@ -52,7 +52,6 @@ void	set_values(t_map_data *data)
 	data->theta_y = 3.14159;
 	data->theta_z = 1.5708;
 	data->projection = 1;
-	data->iso = 1;
 	data->max_x = 0;
 	data->max_y = 0;
 	data->max_z = 0;
@@ -104,7 +103,8 @@ void	matrix_init(t_map_data *data, int fd)
 
 	data->data_map = (int **)malloc(data->row * sizeof(int *));
 	data->color_map = (char ***)malloc((data->row + 1) * sizeof(char **));
-	printf("row: %d || col: %d\n", data->row, data->col);
+	ft_printf("number of rows: %d \nnumber of cols: %d\n", \
+		data->row, data->col);
 	close(fd);
 	i = 0;
 	while (i < data->row)
